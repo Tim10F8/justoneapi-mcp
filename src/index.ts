@@ -5,6 +5,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { toMcpErrorPayload } from "./common/errors.js";
 import {
   kuaishouSearchVideoV2,
+  KuaishouSearchVideoV2Input,
 } from "./tools/kuaishou/search_video_v2.js";
 
 const server = new McpServer({
@@ -16,10 +17,7 @@ server.registerTool(
   "kuaishou_search_video_v2",
   {
     description: "Search Kuaishou videos by keyword. Returns the original raw JSON response from upstream without field normalization.",
-    inputSchema: {
-      keyword: z.string().min(1).describe("Search keyword, e.g. 'dance'"),
-      page: z.number().int().min(1).default(1).describe("Page number, default 1"),
-    },
+    inputSchema: KuaishouSearchVideoV2Input.shape,
   },
   async (input) => {
     try {

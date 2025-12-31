@@ -13,7 +13,7 @@ export async function kuaishouSearchVideoV2(
 ) {
   const token = encodeURIComponent(requireToken());
   const keyword = encodeURIComponent(input.keyword);
-  const page = input.page ?? 1;
+  const page = input.page; // zod default ensures it's a number
 
   const raw = await getJson(
     `/api/kuaishou/search-video/v2?token=${token}&keyword=${keyword}&page=${page}`

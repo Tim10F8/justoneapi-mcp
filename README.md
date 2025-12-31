@@ -78,10 +78,21 @@ The token is passed as a query parameter and is never logged in plaintext.
 
 ### 1) Build
 
-    npm install
-    npm run build
+```bash
+npm install
+npm run build
+```
 
-### 2) Configure Claude Desktop (macOS)
+### 2) Local Development (Optional)
+
+You can create a `.env` file in the root directory for local testing:
+
+```env
+JUSTONEAPI_TOKEN=your_token_here
+JUSTONEAPI_DEBUG=true
+```
+
+### 3) Configure Claude Desktop (macOS)
 
 Create or edit the file:
 

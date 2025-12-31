@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 export const config = {
   baseUrl: process.env.JUSTONEAPI_BASE_URL ?? "http://47.117.133.51:30015",
   token: process.env.JUSTONEAPI_TOKEN ?? "",
