@@ -1,4 +1,4 @@
-> **Raw JSON by design.**
+> **Raw JSON by design.** Unmodified upstream responses for maximum data fidelity.
 
 # JustOneAPI MCP Server
 
