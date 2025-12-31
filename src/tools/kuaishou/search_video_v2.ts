@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { requireToken } from "../../common/config.js";
+import { config, requireToken } from "../../common/config.js";
 import { getJson } from "../../common/http.js";
 
 export const KuaishouSearchVideoV2Input = z.object({
@@ -7,16 +7,23 @@ export const KuaishouSearchVideoV2Input = z.object({
   page: z.number().int().min(1).default(1).describe("Page number, default 1"),
 });
 
-export async function kuaishouSearchVideoV2(input: z.infer<typeof KuaishouSearchVideoV2Input>) {
-  requireToken();
 
+export async function kuaishouSearchVideoV2(
+  input: z.infer<typeof KuaishouSearchVideoV2Input>
+) {
+  const token = encodeURIComponent(requireToken());
   const keyword = encodeURIComponent(input.keyword);
   const page = input.page ?? 1;
 
-  // token 在 query 参数中
-  const token = encodeURIComponent(process.env.JUSTONEAPI_TOKEN!);
-
-  return getJson(
+  const raw = await getJson(
     `/api/kuaishou/search-video/v2?token=${token}&keyword=${keyword}&page=${page}`
   );
+
+  return {
+    code: raw?.code ?? 0,
+    message: raw?.message ?? null,
+    recordTime: raw?.recordTime ?? null,
+    query: { keyword: input.keyword, page },
+    raw, // ✅ full original JSON
+  };
 }

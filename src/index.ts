@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
-import { mapError } from "./common/errors.js";
+import { toMcpErrorPayload } from "./common/errors.js";
 import {
   KuaishouSearchVideoV2Input,
   kuaishouSearchVideoV2,
@@ -9,27 +9,29 @@ import {
 
 const server = new McpServer({
   name: "justoneapi-mcp",
-  version: "1.0.0",
+  version: "0.1.0",
 });
 
-server.registerTool(
+server.tool(
   "kuaishou_search_video_v2",
-  {
-    description: "Search Kuaishou videos by keyword.",
-    inputSchema: {
-      keyword: KuaishouSearchVideoV2Input.shape.keyword,
-      page: KuaishouSearchVideoV2Input.shape.page,
-    },
-  },
+  "Search Kuaishou videos by keyword. Returns the original raw JSON response from upstream without field normalization.",
+  KuaishouSearchVideoV2Input,
   async (input) => {
     try {
-      const data = await kuaishouSearchVideoV2(input as any);
-      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+      const data = await kuaishouSearchVideoV2(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
     } catch (e: any) {
-      const m = mapError(e);
+      const m = toMcpErrorPayload(e);
       return {
         isError: true,
-        content: [{ type: "text", text: `ERROR[${m.code}]: ${m.message}` }],
+        content: [
+          {
+            type: "text",
+            text: `ERROR[${m.code}] (upstream=${m.upstreamCode ?? "N/A"}): ${m.message}`,
+          },
+        ],
       };
     }
   }
