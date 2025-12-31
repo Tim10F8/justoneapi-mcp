@@ -51,13 +51,7 @@ Example (simplified):
       "code": 0,
       "message": null,
       "recordTime": "2025-12-31T14:55:21Z",
-      "query": {
-        "keyword": "dance",
-        "page": 1
-      },
-      "raw": {
-        "...": "upstream response"
-      }
+      "data": ...
     }
 
 ---
