@@ -108,7 +108,7 @@ Add the following JSON (replace path and token):
             "/Users/YOUR_USERNAME/project/justoneapi-mcp/dist/index.js"
           ],
           "env": {
-            "JUSTONEAPI_BASE_URL": "http://47.117.133.51:30015",
+            "JUSTONEAPI_BASE_URL": "https://api.justoneapi.com",
             "JUSTONEAPI_TOKEN": "your_token_here",
             "JUSTONEAPI_TIMEOUT_MS": "20000",
             "JUSTONEAPI_RETRY": "1",

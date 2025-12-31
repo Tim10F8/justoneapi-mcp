@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 export const config = {
-  baseUrl: process.env.JUSTONEAPI_BASE_URL ?? "http://47.117.133.51:30015",
+  baseUrl: process.env.JUSTONEAPI_BASE_URL ?? "https://api.justoneapi.com",
   token: process.env.JUSTONEAPI_TOKEN ?? "",
 
   // Debug logs go to stderr so Claude Desktop can display them.
