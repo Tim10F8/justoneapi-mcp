@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { config, requireToken } from "../../common/config.js";
-import { getJson } from "../../common/http.js";
+import {z} from "zod";
+import {requireToken} from "../../common/config.js";
+import {getJson} from "../../common/http.js";
 
 export const KuaishouSearchVideoV2Input = z.object({
   keyword: z.string().min(1).describe("Search keyword, e.g. 'dance'"),
@@ -15,15 +15,7 @@ export async function kuaishouSearchVideoV2(
   const keyword = encodeURIComponent(input.keyword);
   const page = input.page; // zod default ensures it's a number
 
-  const raw = await getJson(
-    `/api/kuaishou/search-video/v2?token=${token}&keyword=${keyword}&page=${page}`
+  return await getJson(
+      `/api/kuaishou/search-video/v2?token=${token}&keyword=${keyword}&page=${page}`
   );
-
-  return {
-    code: raw?.code ?? 0,
-    message: raw?.message ?? null,
-    recordTime: raw?.recordTime ?? null,
-    query: { keyword: input.keyword, page },
-    raw, // ✅ full original JSON
-  };
 }

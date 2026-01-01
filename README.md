@@ -39,7 +39,7 @@ Input:
 
 Output:
 - Returns the original raw JSON response from upstream
-- Includes metadata such as code, message, recordTime, and query info
+- Includes metadata such as code, message, recordTime
 
 ---
 
