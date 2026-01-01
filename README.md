@@ -74,7 +74,7 @@ The token is passed as a query parameter and is never logged in plaintext.
 
 ### Option 1: npx (Recommended)
 
-Use directly with npx, no installation required:
+Use directly with npx, no installation required.
 
 Configure Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
@@ -83,16 +83,9 @@ Configure Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_c
   "mcpServers": {
     "justoneapi": {
       "command": "npx",
-      "args": [
-        "-y",
-        "justoneapi-mcp"
-      ],
+      "args": ["-y", "justoneapi-mcp"],
       "env": {
-        "JUSTONEAPI_BASE_URL": "https://api.justoneapi.com",
-        "JUSTONEAPI_TOKEN": "your_token_here",
-        "JUSTONEAPI_TIMEOUT_MS": "20000",
-        "JUSTONEAPI_RETRY": "1",
-        "JUSTONEAPI_DEBUG": "false"
+        "JUSTONEAPI_TOKEN": "your_token_here"
       }
     }
   }
@@ -113,11 +106,7 @@ Configure Claude Desktop:
     "justoneapi": {
       "command": "justoneapi-mcp",
       "env": {
-        "JUSTONEAPI_BASE_URL": "https://api.justoneapi.com",
-        "JUSTONEAPI_TOKEN": "your_token_here",
-        "JUSTONEAPI_TIMEOUT_MS": "20000",
-        "JUSTONEAPI_RETRY": "1",
-        "JUSTONEAPI_DEBUG": "false"
+        "JUSTONEAPI_TOKEN": "your_token_here"
       }
     }
   }
@@ -133,13 +122,6 @@ npm install
 npm run build
 ```
 
-Create `.env` file (optional, for local testing):
-
-```env
-JUSTONEAPI_TOKEN=your_token_here
-JUSTONEAPI_DEBUG=true
-```
-
 Configure Claude Desktop:
 
 ```json
@@ -147,20 +129,16 @@ Configure Claude Desktop:
   "mcpServers": {
     "justoneapi": {
       "command": "node",
-      "args": [
-        "/absolute/path/to/justoneapi-mcp/dist/index.js"
-      ],
+      "args": ["/absolute/path/to/justoneapi-mcp/dist/index.js"],
       "env": {
-        "JUSTONEAPI_BASE_URL": "https://api.justoneapi.com",
-        "JUSTONEAPI_TOKEN": "your_token_here",
-        "JUSTONEAPI_TIMEOUT_MS": "20000",
-        "JUSTONEAPI_RETRY": "1",
-        "JUSTONEAPI_DEBUG": "false"
+        "JUSTONEAPI_TOKEN": "your_token_here"
       }
     }
   }
 }
 ```
+
+That's it! Only the token is required.
 
 ---
 
@@ -232,6 +210,40 @@ Each error includes an actionable message.
 Transport, not transformation.
 
 This MCP prioritizes stability, transparency, and raw data fidelity over convenience.
+
+---
+
+## Advanced Configuration (Optional)
+
+By default, the server works with sensible defaults. You only need to set `JUSTONEAPI_TOKEN`.
+
+However, you can customize behavior with these optional environment variables:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `JUSTONEAPI_TOKEN` | *(required)* | Your JustOneAPI token |
+| `JUSTONEAPI_BASE_URL` | `https://api.justoneapi.com` | API endpoint |
+| `JUSTONEAPI_TIMEOUT_MS` | `20000` | Request timeout (milliseconds) |
+| `JUSTONEAPI_RETRY` | `1` | Number of retries after first attempt |
+| `JUSTONEAPI_DEBUG` | `false` | Enable debug logging to stderr |
+
+Example with custom settings:
+
+```json
+{
+  "mcpServers": {
+    "justoneapi": {
+      "command": "npx",
+      "args": ["-y", "justoneapi-mcp"],
+      "env": {
+        "JUSTONEAPI_TOKEN": "your_token_here",
+        "JUSTONEAPI_TIMEOUT_MS": "30000",
+        "JUSTONEAPI_DEBUG": "true"
+      }
+    }
+  }
+}
+```
 
 ---
 
