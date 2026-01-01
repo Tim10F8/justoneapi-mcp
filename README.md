@@ -70,55 +70,136 @@ The token is passed as a query parameter and is never logged in plaintext.
 
 ---
 
-## Quick Start (Claude Desktop)
+## Installation
 
-### 1) Build
+### Option 1: npx (Recommended)
+
+Use directly with npx, no installation required:
+
+Configure Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "justoneapi": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "justoneapi-mcp"
+      ],
+      "env": {
+        "JUSTONEAPI_BASE_URL": "https://api.justoneapi.com",
+        "JUSTONEAPI_TOKEN": "your_token_here",
+        "JUSTONEAPI_TIMEOUT_MS": "20000",
+        "JUSTONEAPI_RETRY": "1",
+        "JUSTONEAPI_DEBUG": "false"
+      }
+    }
+  }
+}
+```
+
+### Option 2: Global Installation
 
 ```bash
+npm install -g justoneapi-mcp
+```
+
+Configure Claude Desktop:
+
+```json
+{
+  "mcpServers": {
+    "justoneapi": {
+      "command": "justoneapi-mcp",
+      "env": {
+        "JUSTONEAPI_BASE_URL": "https://api.justoneapi.com",
+        "JUSTONEAPI_TOKEN": "your_token_here",
+        "JUSTONEAPI_TIMEOUT_MS": "20000",
+        "JUSTONEAPI_RETRY": "1",
+        "JUSTONEAPI_DEBUG": "false"
+      }
+    }
+  }
+}
+```
+
+### Option 3: Local Development
+
+```bash
+git clone <repository>
+cd justoneapi-mcp
 npm install
 npm run build
 ```
 
-### 2) Local Development (Optional)
-
-You can create a `.env` file in the root directory for local testing:
+Create `.env` file (optional, for local testing):
 
 ```env
 JUSTONEAPI_TOKEN=your_token_here
 JUSTONEAPI_DEBUG=true
 ```
 
-### 3) Configure Claude Desktop (macOS)
+Configure Claude Desktop:
 
-Create or edit the file:
-
-    ~/Library/Application Support/Claude/claude_desktop_config.json
-
-Add the following JSON (replace path and token):
-
-    {
-      "mcpServers": {
-        "justoneapi": {
-          "command": "/usr/local/bin/node",
-          "args": [
-            "/Users/YOUR_USERNAME/project/justoneapi-mcp/dist/index.js"
-          ],
-          "env": {
-            "JUSTONEAPI_BASE_URL": "https://api.justoneapi.com",
-            "JUSTONEAPI_TOKEN": "your_token_here",
-            "JUSTONEAPI_TIMEOUT_MS": "20000",
-            "JUSTONEAPI_RETRY": "1",
-            "JUSTONEAPI_DEBUG": "false"
-          }
-        }
+```json
+{
+  "mcpServers": {
+    "justoneapi": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/justoneapi-mcp/dist/index.js"
+      ],
+      "env": {
+        "JUSTONEAPI_BASE_URL": "https://api.justoneapi.com",
+        "JUSTONEAPI_TOKEN": "your_token_here",
+        "JUSTONEAPI_TIMEOUT_MS": "20000",
+        "JUSTONEAPI_RETRY": "1",
+        "JUSTONEAPI_DEBUG": "false"
       }
     }
+  }
+}
+```
 
-### 3) Restart Claude Desktop
+---
 
-Quit Claude Desktop completely (Cmd + Q), then open it again.
+## Usage with Other MCP Hosts
 
-### 4) Test
+This server follows the standard MCP protocol and is compatible with any MCP host (Cursor, Cline, custom agents, etc.).
+
+Generic configuration:
+
+```json
+{
+  "command": "npx",
+  "args": ["-y", "justoneapi-mcp"],
+  "env": {
+    "JUSTONEAPI_TOKEN": "your_token_here"
+  }
+}
+```
+
+Or if globally installed:
+
+```json
+{
+  "command": "justoneapi-mcp",
+  "env": {
+    "JUSTONEAPI_TOKEN": "your_token_here"
+  }
+}
+```
+
+---
+
+## Quick Start
+
+### 1) Restart Your MCP Host
+
+After configuring, restart Claude Desktop (Cmd + Q) or your MCP host.
+
+### 2) Test
 
 In Claude Desktop:
 
