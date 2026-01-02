@@ -62,13 +62,9 @@ Example (simplified):
 
 ## Authentication
 
-Authentication is handled via JustOneAPI token.
+You need a JustOneAPI token to use this server.
 
-Set environment variable:
-
-    JUSTONEAPI_TOKEN=your_token_here
-
-The token is passed as a query parameter and is never logged in plaintext.
+**Get your token**: Visit [https://justoneapi.com](https://justoneapi.com) to sign up and obtain your API token.
 
 ---
 
@@ -78,7 +74,12 @@ The token is passed as a query parameter and is never logged in plaintext.
 
 Use directly with npx, no installation required.
 
-Configure Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+**Configure Claude Desktop:**
+
+Edit the configuration file for your operating system:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
 
 ```json
 {
@@ -87,12 +88,14 @@ Configure Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_c
       "command": "npx",
       "args": ["-y", "justoneapi-mcp"],
       "env": {
-        "JUSTONEAPI_TOKEN": "your_token_here"
+        "JUSTONEAPI_TOKEN": "your_actual_token_here"
       }
     }
   }
 }
 ```
+
+> 💡 **Get your token**: Sign up at [justoneapi.com](https://justoneapi.com)
 
 ### Option 2: Global Installation
 
@@ -100,7 +103,12 @@ Configure Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_c
 npm install -g justoneapi-mcp
 ```
 
-Configure Claude Desktop:
+**Configure Claude Desktop:**
+
+Edit the configuration file for your operating system:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
 
 ```json
 {
@@ -108,12 +116,14 @@ Configure Claude Desktop:
     "justoneapi": {
       "command": "justoneapi-mcp",
       "env": {
-        "JUSTONEAPI_TOKEN": "your_token_here"
+        "JUSTONEAPI_TOKEN": "your_actual_token_here"
       }
     }
   }
 }
 ```
+
+> 💡 **Get your token**: Sign up at [justoneapi.com](https://justoneapi.com)
 
 ### Option 3: Local Development
 
@@ -124,7 +134,12 @@ npm install
 npm run build
 ```
 
-Configure Claude Desktop:
+**Configure Claude Desktop:**
+
+Edit the configuration file for your operating system:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
 
 ```json
 {
@@ -133,12 +148,14 @@ Configure Claude Desktop:
       "command": "node",
       "args": ["/absolute/path/to/justoneapi-mcp/dist/index.js"],
       "env": {
-        "JUSTONEAPI_TOKEN": "your_token_here"
+        "JUSTONEAPI_TOKEN": "your_actual_token_here"
       }
     }
   }
 }
 ```
+
+> 💡 **Get your token**: Sign up at [justoneapi.com](https://justoneapi.com)
 
 That's it! Only the token is required.
 
@@ -155,7 +172,7 @@ Generic configuration:
   "command": "npx",
   "args": ["-y", "justoneapi-mcp"],
   "env": {
-    "JUSTONEAPI_TOKEN": "your_token_here"
+    "JUSTONEAPI_TOKEN": "your_actual_token_here"
   }
 }
 ```
@@ -166,10 +183,12 @@ Or if globally installed:
 {
   "command": "justoneapi-mcp",
   "env": {
-    "JUSTONEAPI_TOKEN": "your_token_here"
+    "JUSTONEAPI_TOKEN": "your_actual_token_here"
   }
 }
 ```
+
+> 💡 **Get your token**: Sign up at [justoneapi.com](https://justoneapi.com)
 
 ---
 
