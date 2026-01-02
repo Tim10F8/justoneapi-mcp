@@ -213,16 +213,35 @@ Then:
 
 ## Error Handling
 
-Upstream errors are normalized into stable MCP error codes, including:
+All errors are normalized into stable MCP error codes with actionable messages.
 
-- INVALID_TOKEN
-- RATE_LIMITED
-- DAILY_QUOTA_EXCEEDED
-- INSUFFICIENT_BALANCE
-- VALIDATION_ERROR
-- INTERNAL_ERROR
+### Error Codes
 
-Each error includes an actionable message.
+| Error Code | Description | Action                              |
+|------------|-------------|-------------------------------------|
+| `INVALID_TOKEN` | Token is invalid or inactive | Update your `JUSTONEAPI_TOKEN`      |
+| `COLLECT_FAILED` | Data collection failed | Retry after a short delay           |
+| `RATE_LIMITED` | Too many requests | Slow down and retry later           |
+| `DAILY_QUOTA_EXCEEDED` | Daily usage limit reached | Wait until tomorrow or upgrade plan |
+| `INSUFFICIENT_BALANCE` | Account balance too low | Top up your account                 |
+| `PERMISSION_DENIED` | No access to this resource | Contact support                     |
+| `VALIDATION_ERROR` | Invalid request parameters | Check input values                  |
+| `INTERNAL_ERROR` | Server error | Retry later                         |
+| `NETWORK_TIMEOUT` | Request timed out | Check network or retry              |
+| `NETWORK_ERROR` | Network connection failed | Check internet connection           |
+| `UPSTREAM_ERROR` | Unspecified upstream error | Retry or contact support            |
+
+### Error Format
+
+Errors are returned in this format:
+```
+ERROR[ERROR_CODE] (upstream=XXX): Human-readable message
+```
+
+Example:
+```
+ERROR[RATE_LIMITED] (upstream=302): Rate limit exceeded. Please slow down and retry later.
+```
 
 ---
 
