@@ -49,7 +49,7 @@ Just ask Claude or your MCP host to use the tool with a natural language request
 Claude will automatically:
 - Convert your request to the correct API format
 - Handle date formatting (UTC+8 timezone)
-- Process pagination with nextCursor
+- Process pagination with nextCursor (just ask "show me more")
 - Return and summarize results
 
 **Search Syntax:**
@@ -297,11 +297,42 @@ Search for posts containing "AI" OR "机器学习" but NOT "广告" on Zhihu,
 from the last 30 days
 ```
 
-**Pagination:**
+**Pagination (Getting more results):**
+
+When search results have more pages, the response includes a `nextCursor` field. Simply ask Claude to continue:
+
 ```
-Get the next page of results from the previous search
+Show me the next page of results
 ```
-*Claude will automatically use the nextCursor from the previous response*
+or
+```
+Get more results from the previous search
+```
+or
+```
+Continue with the next page
+```
+
+Claude will automatically:
+- Extract the `nextCursor` from the previous response
+- Use it to fetch the next page
+- Continue until no more results are available
+
+**Example conversation with pagination:**
+
+**You:** Search for "AI" on all platforms from January 1-5, 2025
+
+**Claude:** *[Returns first page of results with 10-20 items]*
+
+**You:** Show me more results
+
+**Claude:** *[Uses nextCursor to fetch page 2]*
+
+**You:** Continue
+
+**Claude:** *[Fetches page 3, and so on...]*
+
+💡 **Note**: When using `nextCursor` for pagination, you don't need to provide `start`, `end`, or `source` again - the cursor already contains this information.
 
 ---
 
