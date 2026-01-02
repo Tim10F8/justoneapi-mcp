@@ -7,6 +7,10 @@ import {
   kuaishouSearchVideoV2,
   KuaishouSearchVideoV2Input,
 } from "./tools/kuaishou/search_video_v2.js";
+import {
+  unifiedSearchV1,
+  UnifiedSearchV1Input,
+} from "./tools/search/unified_search_v1.js";
 import { version } from "./version.js";
 
 const server = new McpServer({
@@ -24,6 +28,34 @@ server.registerTool(
   async (input) => {
     try {
       const data = await kuaishouSearchVideoV2(input);
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    } catch (e: unknown) {
+      const m = toMcpErrorPayload(e);
+      return {
+        isError: true,
+        content: [
+          {
+            type: "text",
+            text: `ERROR[${m.code}] (upstream=${m.upstreamCode ?? "N/A"}): ${m.message}`,
+          },
+        ],
+      };
+    }
+  }
+);
+
+server.registerTool(
+  "unified_search_v1",
+  {
+    description:
+      "Unified search across multiple platforms (Weibo, WeChat, Zhihu, Douyin, Xiaohongshu, Bilibili, Kuaishou, News). Search by keyword with time range. Supports AND/OR/NOT operators and pagination. Returns raw JSON response.",
+    inputSchema: UnifiedSearchV1Input.shape,
+  },
+  async (input) => {
+    try {
+      const data = await unifiedSearchV1(input);
       return {
         content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
       };

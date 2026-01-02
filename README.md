@@ -31,15 +31,65 @@ This design is intentional to preserve data fidelity and long-term compatibility
 
 ## Available Tools
 
+### unified_search_v1
+
+**Unified search across multiple Chinese social media and news platforms.**
+
+Search data from Weibo, WeChat, Zhihu, Douyin, Xiaohongshu, Bilibili, Kuaishou, and News in one request.
+
+**Input Parameters:**
+- `keyword` (string, required) - Search keyword with advanced syntax:
+  - Single keyword: `deepseek`
+  - AND search: `deepseek chatgpt` (space-separated)
+  - OR search: `deepseek~chatgpt` (tilde-separated)
+  - NOT search: `deepseek -chatgpt` (exclude with minus)
+- `source` (string, optional) - Platform filter:
+  - `ALL` (default) - Search all platforms
+  - `NEWS` - News sources
+  - `WEIBO` - Sina Weibo
+  - `WEIXIN` - WeChat
+  - `ZHIHU` - Zhihu
+  - `DOUYIN` - Douyin/TikTok
+  - `XIAOHONGSHU` - Xiaohongshu/RedNote
+  - `BILIBILI` - Bilibili
+  - `KUAISHOU` - Kuaishou
+- `start` (string, required for first page) - Start time `yyyy-MM-dd HH:mm:ss` (UTC+8)
+  - Must be within 84 days from now
+  - Example: `2025-01-01 00:00:00`
+- `end` (string, required for first page) - End time `yyyy-MM-dd HH:mm:ss` (UTC+8)
+  - Must be after start time
+  - Example: `2025-01-02 23:59:59`
+- `nextCursor` (string, optional) - Pagination cursor from previous response
+  - Use this for subsequent pages instead of start/end times
+
+**Output:**
+- Returns the original raw JSON response from upstream
+- Includes metadata, search results, and `nextCursor` for pagination
+- Use `nextCursor` from response to fetch the next page
+
+**Example Usage:**
+```
+Search for "AI" across all platforms from Jan 1-2, 2025:
+- keyword: "AI"
+- start: "2025-01-01 00:00:00"
+- end: "2025-01-02 23:59:59"
+
+For next page, use the nextCursor from previous response:
+- keyword: "AI"
+- nextCursor: "6846442d123456782101ae3f"
+```
+
+---
+
 ### kuaishou_search_video_v2
 
 Search Kuaishou videos by keyword.
 
-Input:
-- keyword (string, required)
-- page (number, optional, default: 1)
+**Input:**
+- `keyword` (string, required) - Search keyword
+- `page` (number, optional, default: 1) - Page number
 
-Output:
+**Output:**
 - Returns the original raw JSON response from upstream
 - Includes metadata such as code, message, recordTime
 
