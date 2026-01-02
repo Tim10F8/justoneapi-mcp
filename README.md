@@ -273,8 +273,7 @@ You should see the available tools including `unified_search_v1` and `kuaishou_s
 Try searching across multiple platforms:
 
 ```
-Use the unified_search_v1 tool to search for "AI" across all platforms
-from January 1st to January 2nd, 2025.
+Use the unified_search_v1 tool to search for "AI" across all platforms within the last month.
 ```
 
 Claude will automatically format the request and return results from Weibo, WeChat, Zhihu, Douyin, Xiaohongshu, Bilibili, Kuaishou, and News.
