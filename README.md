@@ -31,67 +31,61 @@ This design is intentional to preserve data fidelity and long-term compatibility
 
 ## Available Tools
 
-### unified_search_v1
+This MCP server provides multiple tools to interact with JustOneAPI endpoints. Each tool returns the original raw JSON response from upstream without field parsing.
 
-**Unified search across multiple Chinese social media and news platforms.**
+### Featured Tool: Unified Search
 
-Search data from Weibo, WeChat, Zhihu, Douyin, Xiaohongshu, Bilibili, Kuaishou, and News in one request.
+**`unified_search_v1`** - Search across multiple Chinese social media and news platforms in one request.
 
-**Input Parameters:**
-- `keyword` (string, required) - Search keyword with advanced syntax:
-  - Single keyword: `deepseek`
-  - AND search: `deepseek chatgpt` (space-separated)
-  - OR search: `deepseek~chatgpt` (tilde-separated)
-  - NOT search: `deepseek -chatgpt` (exclude with minus)
-- `source` (string, optional) - Platform filter:
-  - `ALL` (default) - Search all platforms
-  - `NEWS` - News sources
-  - `WEIBO` - Sina Weibo
-  - `WEIXIN` - WeChat
-  - `ZHIHU` - Zhihu
-  - `DOUYIN` - Douyin/TikTok
-  - `XIAOHONGSHU` - Xiaohongshu/RedNote
-  - `BILIBILI` - Bilibili
-  - `KUAISHOU` - Kuaishou
-- `start` (string, required for first page) - Start time `yyyy-MM-dd HH:mm:ss` (UTC+8)
-  - Must be within 84 days from now
-  - Example: `2025-01-01 00:00:00`
-- `end` (string, required for first page) - End time `yyyy-MM-dd HH:mm:ss` (UTC+8)
-  - Must be after start time
-  - Example: `2025-01-02 23:59:59`
-- `nextCursor` (string, optional) - Pagination cursor from previous response
-  - Use this for subsequent pages instead of start/end times
+Supports: Weibo, WeChat, Zhihu, Douyin, Xiaohongshu, Bilibili, Kuaishou, and News.
 
-**Output:**
-- Returns the original raw JSON response from upstream
-- Includes metadata, search results, and `nextCursor` for pagination
-- Use `nextCursor` from response to fetch the next page
-
-**Example Usage:**
-```
-Search for "AI" across all platforms from Jan 1-2, 2025:
-- keyword: "AI"
-- start: "2025-01-01 00:00:00"
-- end: "2025-01-02 23:59:59"
-
-For next page, use the nextCursor from previous response:
-- keyword: "AI"
-- nextCursor: "6846442d123456782101ae3f"
+**Quick Example:**
+```json
+{
+  "keyword": "AI",
+  "source": "ALL",
+  "start": "2025-01-01 00:00:00",
+  "end": "2025-01-02 23:59:59"
+}
 ```
 
----
+**Search Syntax:**
+- Single keyword: `deepseek`
+- AND search: `deepseek chatgpt`
+- OR search: `deepseek~chatgpt`
+- NOT search: `deepseek -chatgpt`
 
-### kuaishou_search_video_v2
+**Platform Options:**
+`ALL` (default), `NEWS`, `WEIBO`, `WEIXIN`, `ZHIHU`, `DOUYIN`, `XIAOHONGSHU`, `BILIBILI`, `KUAISHOU`
 
-Search Kuaishou videos by keyword.
+### Discovering All Available Tools
 
-**Input:**
-- `keyword` (string, required) - Search keyword
-- `page` (number, optional, default: 1) - Page number
+To see all available tools in your MCP host (Claude Desktop, Cursor, etc.):
 
-**Output:**
-- Returns the original raw JSON response from upstream
-- Includes metadata such as code, message, recordTime
+**In Claude Desktop:**
+```
+Please list all available tools from justoneapi-mcp
+```
+
+**In Cursor or other MCP hosts:**
+Use your host's tool discovery feature to see all available tools and their parameters.
+
+Each tool includes:
+- ✅ Complete parameter descriptions
+- ✅ Input validation with Zod schemas
+- ✅ Detailed error messages
+- ✅ Example values in parameter descriptions
+
+### Tool Naming Convention
+
+All tools follow this pattern:
+- `unified_search_v1` - Unified search across platforms
+- `kuaishou_search_video_v2` - Platform-specific video search
+- `{platform}_{action}_{version}` - General pattern
+
+### Complete Tool Documentation
+
+For detailed documentation of all tools, parameters, and examples, see **[TOOLS.md](TOOLS.md)**.
 
 ---
 
